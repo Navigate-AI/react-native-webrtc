@@ -106,6 +106,9 @@
         if (encoding.maxBitrateBps) {
             encodingDictionary[@"maxBitrate"] = encoding.maxBitrateBps;
         }
+        if (encoding.minBitrateBps) {
+            encodingDictionary[@"minBitrate"] = encoding.minBitrateBps;
+        }
         if (encoding.maxFramerate) {
             encodingDictionary[@"maxFramerate"] = encoding.maxFramerate;
         }
