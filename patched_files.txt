@@ -1,0 +1,13 @@
+ios/RCTWebRTC/WebRTCModule+Transceivers.m
+lib/commonjs/index.js
+lib/commonjs/index.js.map
+lib/commonjs/RTCRtpEncodingParameters.js
+lib/commonjs/RTCRtpEncodingParameters.js.map
+lib/module/index.js
+lib/module/index.js.map
+lib/module/RTCRtpEncodingParameters.js
+lib/module/RTCRtpEncodingParameters.js.map
+lib/typescript/index.d.ts
+lib/typescript/RTCRtpEncodingParameters.d.ts
+src/index.ts
+src/RTCRtpEncodingParameters.ts
