@@ -3,6 +3,7 @@ import MediaStream from './MediaStream';
 import MediaStreamTrack from './MediaStreamTrack';
 import RTCDataChannel from './RTCDataChannel';
 import RTCDataChannelEvent from './RTCDataChannelEvent';
+import RTCIceCandidateErrorEvent from './RTCIceCandidateErrorEvent';
 import RTCIceCandidateEvent from './RTCIceCandidateEvent';
 import RTCRtpReceiver from './RTCRtpReceiver';
 import RTCRtpSender from './RTCRtpSender';
@@ -38,7 +39,7 @@ declare type RTCConfiguration = {
 declare type RTCPeerConnectionEventMap = {
     connectionstatechange: Event<'connectionstatechange'>;
     icecandidate: RTCIceCandidateEvent<'icecandidate'>;
-    icecandidateerror: RTCIceCandidateEvent<'icecandidateerror'>;
+    icecandidateerror: RTCIceCandidateErrorEvent<'icecandidateerror'>;
     iceconnectionstatechange: Event<'iceconnectionstatechange'>;
     icegatheringstatechange: Event<'icegatheringstatechange'>;
     negotiationneeded: Event<'negotiationneeded'>;

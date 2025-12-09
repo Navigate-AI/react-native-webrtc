@@ -7,6 +7,7 @@
 
 #import <WebRTC/RTCConfiguration.h>
 #import <WebRTC/RTCIceCandidate.h>
+#import <WebRTC/RTCIceCandidateErrorEvent.h>
 #import <WebRTC/RTCIceServer.h>
 #import <WebRTC/RTCMediaConstraints.h>
 #import <WebRTC/RTCMediaStreamTrack.h>
@@ -790,6 +791,20 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(peerConnectionRemoveTrack : (nonnull NSNu
                                    @"sdpMid" : candidate.sdpMid
                                },
                                @"sdp" : newSdp
+                           }];
+    });
+}
+
+- (void)peerConnection:(RTCPeerConnection *)peerConnection didFailToGatherIceCandidate:(RTCIceCandidateErrorEvent *)event {
+    dispatch_async(self.workerQueue, ^{
+        [self sendEventWithName:kEventPeerConnectionGotICECandidateError
+                           body:@{
+                               @"pcId" : peerConnection.reactTag,
+                               @"address" : event.address,
+                               @"port" : @(event.port),
+                               @"url" : event.url,
+                               @"errorCode" : @(event.errorCode),
+                               @"errorText" : event.errorText
                            }];
     });
 }
