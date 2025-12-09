@@ -9,6 +9,7 @@ import MediaStreamTrackEvent from './MediaStreamTrackEvent';
 import RTCDataChannel from './RTCDataChannel';
 import RTCDataChannelEvent from './RTCDataChannelEvent';
 import RTCIceCandidate from './RTCIceCandidate';
+import RTCIceCandidateErrorEvent from './RTCIceCandidateErrorEvent';
 import RTCIceCandidateEvent from './RTCIceCandidateEvent';
 import RTCRtpReceiveParameters from './RTCRtpReceiveParameters';
 import RTCRtpReceiver from './RTCRtpReceiver';
@@ -64,7 +65,7 @@ type RTCConfiguration = {
 type RTCPeerConnectionEventMap = {
     connectionstatechange: Event<'connectionstatechange'>
     icecandidate: RTCIceCandidateEvent<'icecandidate'>
-    icecandidateerror: RTCIceCandidateEvent<'icecandidateerror'>
+    icecandidateerror: RTCIceCandidateErrorEvent<'icecandidateerror'>
     iceconnectionstatechange: Event<'iceconnectionstatechange'>
     icegatheringstatechange: Event<'icegatheringstatechange'>
     negotiationneeded: Event<'negotiationneeded'>
@@ -672,6 +673,13 @@ export default class RTCPeerConnection extends EventTarget<RTCPeerConnectionEven
             const candidate = new RTCIceCandidate(ev.candidate);
 
             this.dispatchEvent(new RTCIceCandidateEvent('icecandidate', { candidate }));
+        });
+
+        addListener(this, 'peerConnectionGotICECandidateError', (ev: any) => {
+            if (ev.pcId !== this._pcId) {
+                return;
+            }
+            this.dispatchEvent(new RTCIceCandidateErrorEvent('icecandidateerror', ev));
         });
 
         addListener(this, 'peerConnectionIceGatheringChanged', (ev: any) => {
