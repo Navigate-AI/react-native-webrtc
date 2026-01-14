@@ -11,6 +11,7 @@ import RTCDataChannelEvent from './RTCDataChannelEvent';
 import RTCIceCandidate from './RTCIceCandidate';
 import RTCIceCandidateErrorEvent from './RTCIceCandidateErrorEvent';
 import RTCIceCandidateEvent from './RTCIceCandidateEvent';
+import RTCIceSelectedCandidatePairChangedEvent from './RTCIceSelectedCandidatePairChangedEvent';
 import RTCRtpReceiveParameters from './RTCRtpReceiveParameters';
 import RTCRtpReceiver from './RTCRtpReceiver';
 import RTCRtpSendParameters from './RTCRtpSendParameters';
@@ -68,6 +69,7 @@ type RTCPeerConnectionEventMap = {
     icecandidateerror: RTCIceCandidateErrorEvent<'icecandidateerror'>
     iceconnectionstatechange: Event<'iceconnectionstatechange'>
     icegatheringstatechange: Event<'icegatheringstatechange'>
+    iceselectedcandidatepairchanged: Event<'iceselectedcandidatepairchanged'>
     negotiationneeded: Event<'negotiationneeded'>
     signalingstatechange: Event<'signalingstatechange'>
     datachannel: RTCDataChannelEvent<'datachannel'>
@@ -703,6 +705,14 @@ export default class RTCPeerConnection extends EventTarget<RTCPeerConnectionEven
             }
 
             this.dispatchEvent(new Event('icegatheringstatechange'));
+        });
+
+        addListener(this, 'peerConnectionIceSelectedCandidatePairChanged', (ev: any) => {
+            if (ev.pcId !== this._pcId) {
+                return;
+            }
+
+            this.dispatchEvent(new RTCIceSelectedCandidatePairChangedEvent(ev));
         });
 
         addListener(this, 'peerConnectionDidOpenDataChannel', (ev: any) => {

@@ -14,6 +14,7 @@ const NATIVE_EVENTS = [
     'peerConnectionOnRenegotiationNeeded',
     'peerConnectionIceConnectionChanged',
     'peerConnectionIceGatheringChanged',
+    'peerConnectionIceSelectedCandidatePairChanged',
     'peerConnectionGotICECandidate',
     'peerConnectionGotICECandidateError',
     'peerConnectionDidOpenDataChannel',

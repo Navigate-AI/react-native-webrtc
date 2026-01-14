@@ -11,6 +11,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 
+import org.webrtc.CandidatePairChangeEvent;
 import org.webrtc.DataChannel;
 import org.webrtc.IceCandidate;
 import org.webrtc.MediaStream;
@@ -328,6 +329,33 @@ class PeerConnectionObserver implements PeerConnection.Observer {
 
     @Override
     public void onIceConnectionReceivingChange(boolean receiving) {}
+
+    @Override
+    public void onSelectedCandidatePairChanged(CandidatePairChangeEvent event) {
+        Log.d(TAG, "onSelectedCandidatePairChanged " + event.reason);
+
+        ThreadUtils.runOnExecutor(() -> {
+            WritableMap params = Arguments.createMap();
+            params.putInt("pcId", id);
+            params.putString("reason", event.reason);
+            params.putInt("lastDataReceivedMs", event.lastDataReceivedMs);
+            params.putInt("estimatedDisconnectedTimeMs", event.estimatedDisconnectedTimeMs);
+
+            WritableMap localParams = Arguments.createMap();
+            localParams.putInt("sdpMLineIndex", event.local.sdpMLineIndex);
+            localParams.putString("sdpMid", event.local.sdpMid);
+            localParams.putString("candidate", event.local.sdp);
+            params.putMap("local", localParams);
+
+            WritableMap remoteParams = Arguments.createMap();
+            remoteParams.putInt("sdpMLineIndex", event.remote.sdpMLineIndex);
+            remoteParams.putString("sdpMid", event.remote.sdpMid);
+            remoteParams.putString("candidate", event.remote.sdp);
+            params.putMap("remote", remoteParams);
+
+            webRTCModule.sendEvent("peerConnectionIceSelectedCandidatePairChanged", params);
+        });
+    }
 
     @Override
     public void onIceGatheringChange(PeerConnection.IceGatheringState iceGatheringState) {

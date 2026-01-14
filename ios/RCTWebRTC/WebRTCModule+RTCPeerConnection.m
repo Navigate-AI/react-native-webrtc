@@ -771,6 +771,31 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(peerConnectionRemoveTrack : (nonnull NSNu
     });
 }
 
+- (void)peerConnection:(RTCPeerConnection *)peerConnection
+    didChangeLocalCandidate:(RTCIceCandidate *)local
+            remoteCandidate:(RTCIceCandidate *)remote
+             lastReceivedMs:(int)lastDataReceivedMs
+               changeReason:(NSString *)reason {
+    dispatch_async(self.workerQueue, ^{
+        [self sendEventWithName:kEventPeerConnectionIceSelectedCandidatePairChanged
+                           body:@{
+                               @"pcId" : peerConnection.reactTag,
+                               @"local" : @{
+                                   @"candidate" : local.sdp,
+                                   @"sdpMLineIndex" : @(local.sdpMLineIndex),
+                                   @"sdpMid" : local.sdpMid
+                               },
+                               @"remote" : @{
+                                   @"candidate" : remote.sdp,
+                                   @"sdpMLineIndex" : @(remote.sdpMLineIndex),
+                                   @"sdpMid" : remote.sdpMid
+                               },
+                               @"reason" : reason,
+                               @"lastDataReceivedMs" : @(lastDataReceivedMs),
+                           }];
+    });
+}
+
 - (void)peerConnection:(RTCPeerConnection *)peerConnection didGenerateIceCandidate:(RTCIceCandidate *)candidate {
     dispatch_async(self.workerQueue, ^{
         id newSdp = @{};
@@ -795,7 +820,8 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(peerConnectionRemoveTrack : (nonnull NSNu
     });
 }
 
-- (void)peerConnection:(RTCPeerConnection *)peerConnection didFailToGatherIceCandidate:(RTCIceCandidateErrorEvent *)event {
+- (void)peerConnection:(RTCPeerConnection *)peerConnection
+    didFailToGatherIceCandidate:(RTCIceCandidateErrorEvent *)event {
     dispatch_async(self.workerQueue, ^{
         [self sendEventWithName:kEventPeerConnectionGotICECandidateError
                            body:@{

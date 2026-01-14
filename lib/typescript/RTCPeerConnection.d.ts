@@ -42,6 +42,7 @@ declare type RTCPeerConnectionEventMap = {
     icecandidateerror: RTCIceCandidateErrorEvent<'icecandidateerror'>;
     iceconnectionstatechange: Event<'iceconnectionstatechange'>;
     icegatheringstatechange: Event<'icegatheringstatechange'>;
+    iceselectedcandidatepairchanged: Event<'iceselectedcandidatepairchanged'>;
     negotiationneeded: Event<'negotiationneeded'>;
     signalingstatechange: Event<'signalingstatechange'>;
     datachannel: RTCDataChannelEvent<'datachannel'>;

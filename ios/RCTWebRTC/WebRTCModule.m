@@ -112,6 +112,7 @@ RCT_EXPORT_MODULE();
         kEventPeerConnectionOnRenegotiationNeeded,
         kEventPeerConnectionIceConnectionChanged,
         kEventPeerConnectionIceGatheringChanged,
+        kEventPeerConnectionIceSelectedCandidatePairChanged,
         kEventPeerConnectionGotICECandidate,
         kEventPeerConnectionGotICECandidateError,
         kEventPeerConnectionDidOpenDataChannel,

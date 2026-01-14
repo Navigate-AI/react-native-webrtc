@@ -12,6 +12,7 @@ static NSString *const kEventPeerConnectionStateChanged = @"peerConnectionStateC
 static NSString *const kEventPeerConnectionOnRenegotiationNeeded = @"peerConnectionOnRenegotiationNeeded";
 static NSString *const kEventPeerConnectionIceConnectionChanged = @"peerConnectionIceConnectionChanged";
 static NSString *const kEventPeerConnectionIceGatheringChanged = @"peerConnectionIceGatheringChanged";
+static NSString *const kEventPeerConnectionIceSelectedCandidatePairChanged = @"peerConnectionIceSelectedCandidatePairChanged";
 static NSString *const kEventPeerConnectionGotICECandidate = @"peerConnectionGotICECandidate";
 static NSString *const kEventPeerConnectionGotICECandidateError = @"peerConnectionGotICECandidateError";
 static NSString *const kEventPeerConnectionDidOpenDataChannel = @"peerConnectionDidOpenDataChannel";
